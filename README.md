@@ -22,8 +22,9 @@ As a first step, wrote some python code to turn the pump on for a set amount of 
 python3 src/water.py --time <time in seconds> --pin <GPIO pin (GPIO.BOARD)>
 ```
 
-Scheduled this to run twice a week using `crontab` \(`crontab -e`\):  
+Scheduled this to run three times a week using `crontab` \(`crontab -e`\):  
 ```
-0 12 * * sun,wed ~/Documents/drippies/src/water.py --time 120 --pin 7
+0,10,20,30,40,50 12 * * tue,thu,sat ~/Documents/drippies/src/water.py --time 120 --pin 7
+0,10,20,30,40,50 13 * * tue,thu,sat ~/Documents/drippies/src/water.py --time 240 --pin 11
 ```
-Since I'm using each pump for five drippies, and the pump isn't that powerful, 
+Since I'm using each pump for five drippies, and the pump isn't that powerful, it needs to stay on for several minutes to wet the soil properley.  I'm not sure how resilient the pump is, so I'm running it for a few minutes at a time over the course of an hour.  One of the pumps seems to be better than the other, so the better one runs for less time.
