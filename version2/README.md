@@ -4,4 +4,7 @@ A (second) raspberry pi-based watering system. The basic premise is pretty simpl
 ## Hardware
 
 ### Pump
-I used [this pump](https://www.bunnings.com.au/aquapro-ap550-water-feature-pump_p2810111), together with some [433 MHz radio frequency power outlets](https://www.bunnings.com.au/arlec-remote-controlled-power-outlet-twin-pack_p0095172) and some [433MHz transmitters and receievers](https://www.ebay.com/itm/1X-New-433Mhz-RF-Transmitter-Module-And-Receiver-Link-Kit-For-Arduino-ARM-MCU-WL/182549538034?hash=item2a80cce4f2:g:CFcAAOSw8hxbRvGm).  The RF transmitter and receiever were connected to the Pi according to [the documentation for the rpi-rf python module](https://pypi.org/project/rpi-rf/).
+I used [this pump](https://www.bunnings.com.au/aquapro-ap550-water-feature-pump_p2810111), together with some [433 MHz radio frequency power outlets](https://www.bunnings.com.au/arlec-remote-controlled-power-outlet-twin-pack_p0095172) and some [433MHz transmitters and receievers](https://www.ebay.com/itm/1X-New-433Mhz-RF-Transmitter-Module-And-Receiver-Link-Kit-For-Arduino-ARM-MCU-WL/182549538034?hash=item2a80cce4f2:g:CFcAAOSw8hxbRvGm).  The RF transmitter and receiever were connected to the Pi according to [the documentation for the rpi-rf python module](https://pypi.org/project/rpi-rf/).  
+
+Sombody [already figured out the codes for the remote I bought](https://github.com/sui77/rc-switch/wiki/Description-of-socket-protocols-from-different-brands-and-models).  However, I also used [SimpleRcScanner](https://github.com/sui77/SimpleRcScanner) to check these \(requires compliation\).  My remote can control four sockects (A-D), and has two switches for each - one to turn on and one to turn off.  
+
