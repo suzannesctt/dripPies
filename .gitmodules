@@ -1,0 +1,4 @@
+
+[submodule "version2/SimpleRcScanner"]
+	path = version2/SimpleRcScanner
+	url = https://github.com/sui77/SimpleRcScanner.git
