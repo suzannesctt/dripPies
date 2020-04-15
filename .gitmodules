@@ -2,9 +2,6 @@
 [submodule "version2/SimpleRcScanner"]
 	path = version2/SimpleRcScanner
 	url = https://github.com/sui77/SimpleRcScanner.git
-[submodule "version2/433Utils"]
-	path = version2/433Utils
-	url = https://github.com/ninjablocks/433Utils.git
 [submodule "version2/rc-switch"]
 	path = version2/rc-switch
 	url = https://github.com/sui77/rc-switch.git
