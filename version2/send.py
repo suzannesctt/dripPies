@@ -30,10 +30,8 @@ def main():
 
 
 	# use board numbering
-	GPIO.setmode(GPIO.BCM)
-	GPIO.setup(PIN, GPIO.OUT)
 	i = 0
-	while (i < 3):
+	while (i < 2):
 		countdown(3)
 		print(f"sending {a_on}")
 		transmit(a_on, timings, PIN)
@@ -41,33 +39,13 @@ def main():
 		print(f"sending {a_off}")
 		transmit(a_off, timings, PIN)
 		i = i+1
-	GPIO.cleanup()
-
-def test_sleep(code, protocol, repeats=3):
-	# construct lengths for bits
-	zero = [length*protocol["pulse_length"] for length in protocol["zero"]]
-	one = [length*protocol["pulse_length"] for length in protocol["one"]]
-	sync = [length*protocol["pulse_length"] for length in protocol["sync"]]
-	# construct code
-	do_code = []
-	for digit in code:
-		if digit == "1":
-			do_code.append(partial(print, "1", end="", flush=True))
-			do_code.append(partial(sleep, 0.1))
-		elif digit == "0":
-			do_code.append(partial(print, "0", end="", flush=True))
-			do_code.append(partial(sleep, 0.1))
-		else:
-			raise ValueError("Unregconised digit")
-	do_code.append(partial(print, "sync", end="", flush=True))
-	do_code.append(partial(sleep, 0.1))
-	do_code.append(partial(print, "", flush=True))
-
-	[func() for func in do_code]
-
 
 # func for transmission
 def transmit(code, protocol, pin, repeats=3):
+	# GPIO setup
+	GPIO.setmode(GPIO.BCM)
+	GPIO.setup(pin, GPIO.OUT)
+
 	# construct lengths for bits
 	usec = 1000000
 	zero = [length*protocol["pulse_length"]/usec for length in protocol["zero"]]
@@ -99,6 +77,7 @@ def transmit(code, protocol, pin, repeats=3):
 
 	# execute code
 	[func() for func in do_code]
+	GPIO.cleanup()
 
 def countdown(sec):
 	if sec < 0 :
