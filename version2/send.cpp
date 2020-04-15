@@ -1,53 +1,55 @@
 /*
-Usage: ./sendBinary <code> <pulse>  [pin]
-Code is in binary, eg "0101101001101001000011110000011100"
-pulse with is in microseconds, eg 415
+Usage: ./sendDemo [pin]
 pin is according to wiringPi numbering
 */
 
 
-
-#include "../rc-switch/RCSwitch.h"
+#include "rc-switch/RCSwitch.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 int main(int argc, char * argv[]) {
+
+
 	// check argv
-	if (argc < 3){
-		printf("Sending 433 MHz remote plug control codes\n");
-		printf("Usage: %s <code> <pulseLength> [pin]\n", argv[0]);
-		printf("Code - binary code to transmit\n");
-		printf("PulseLength - pulse length in microseconds\n");
-		printf("pin - wiringPi pin number [0]\n");
-		return -1;
-	}
-	if (wiringPiSetup () == -1) return 1;
-	// get pin if it was set
-	int PIN;
-	if (argc == 4) {
-		PIN = atoi(argv[3]);
-	}
-	else {
-		PIN = 0;
-	}
-	// get pulse length
-	int PULSE = atoi(argv[2]);
+        if (argc > 2){
+                printf("Sending 433 MHz remote plug control codes\n");
+                printf("Usage: %s [pin]\n", argv[0]);
+                printf("pin - wiringPi pin number [0]\n");
+                return -1;
+        }
 
-	// get code to transmit from argv
-	const char* code = argv[1];
+	// set up wiringPi
+        if (wiringPiSetup () == -1) return 1;
 
+        // get pin if it was set
+        int PIN;
+        if (argc == 4) {
+                PIN = atoi(argv[3]);
+        }
+        else {
+                PIN = 0;
+        }
 
-
-	// set up switch
-	static const RCSwitch::Protocol customprotocol = { 105, {  3, 99 }, {  3,  8 }, { 8,  3 }, false };
+	//set up switch
 	RCSwitch mySwitch = RCSwitch();
 	mySwitch.enableTransmit(PIN);
-	mySwitch.setPulseLength(PULSE);
+	mySwitch.setRepeatTransmit(3);
+
+	// custom protocol
+	static const RCSwitch::Protocol customprotocol = { 350, {  1, 27 }, {  1,  2 }, { 2,  1 }, false };
 	mySwitch.setProtocol(customprotocol);
 
-	// send codes
-	mySwitch.send(code);
-
-
+	// transmit
+	int REPEAT = 3;
+	int i = 0;
+	while (i < REPEAT) {
+		mySwitch.send("010110100110100100001111000001110");
+		sleep(1);
+		mySwitch.send("010110100110100100001110000001100");
+		sleep(1);
+		i++;
+	}
+	return 0;
 }
-	
