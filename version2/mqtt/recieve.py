@@ -1,4 +1,5 @@
 import paho.mqtt.client as mqtt
+from datetime import datetime
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -15,7 +16,8 @@ def on_connect(client, userdata, flags, rc):
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    print(msg.topic+" "+str(msg.payload))
+    print(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')+": "+msg.topic+" "+str(msg.payload))
+
 
 client = mqtt.Client()
 client.on_connect = on_connect
