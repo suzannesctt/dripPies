@@ -11,9 +11,9 @@ vwater = 1500 # velocity of sound in water (m/s)
 d = 0.55 # total depth of tank (m)
 
 # SQL to insert one or two values
-insert_temp = " INSERT INTO temp (temp) VALUES (?)"
-insert_humidity = " INSERT INTO humidity (humidity) VALUES (?)"
-insert_voltage = " INSERT INTO temp (voltage) VALUES (?)"
+insert_temp = "INSERT INTO temp (temp) VALUES (?)"
+insert_humidity = "INSERT INTO humidity (humidity) VALUES (?)"
+insert_voltage = "INSERT INTO voltage (voltage) VALUES (?)"
 insert_usTime = "INSERT INTO tank (ustime, full_pc) VALUES (?,?)"
 
 if argv[1] is None:
@@ -41,20 +41,22 @@ def on_message(client, userdata, msg):
     message = msg.payload.decode('utf-8')
     time = datetime.today().strftime('%H:%M:%S')
     date = datetime.today().strftime('%Y-%m-%d')
-# if the topic is usTime, convert to fraction of the tank that's full
+    print(f"{date} {time} {msg.topic}: {message}")
+
     if topic == "garden/usTime":
+    	# if the topic is usTime, convert to fraction of the tank that's full
         sec = int(message)/1000000
         frac_full = (vair*vwater*sec - 2*d*vwater)/(2*d*vair - 2*d*vwater)
         c.execute(insert_usTime, (message, frac_full))
     elif topic == "garden/temperature":
-        c.execute(insert_temp, (message))
+        c.execute(insert_temp, (message,))
     elif topic == "garden/humidity":
-        c.execute(insert_humidity, (message))
+        c.execute(insert_humidity, (message,))
     elif topic == "garden/voltage":
-        c.execuite(insert_voltage, (message))
-    c.commit()
+        c.execute(insert_voltage, (message,))
 
-    print(f"{date} {time} {msg.topic}: {message}")
+    conn.commit()
+
 
 
 client = mqtt.Client()
