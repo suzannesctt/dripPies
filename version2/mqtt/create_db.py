@@ -31,7 +31,7 @@ voltage = """CREATE TABLE voltage
 # tank table has two columns - time in us between trigger and echo, and percentage full
 tank = """CREATE TABLE tank 
                 (id INTEGER PRIMARY KEY,
-                 ustime INTEGER,
+recieve.py                 ustime INTEGER,
 		 full_pc  REAL,
 		 timestamp DATETIME NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'NOW', 'localtime'))
 		 )
