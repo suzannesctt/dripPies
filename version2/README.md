@@ -68,3 +68,16 @@ sudo service mosquitto restart
 ```
 
 I used the Arduino IDE to upload a sketch to the WeMos D1 mini board.
+
+#### Database setup
+
+I used a sqlite3 database to store the data from the WeMosD1 mini sensor.  To install sqlite:
+```
+sudo apt-get install sqlite3
+```
+
+I created a separate table for each of the quantities being measured: humidity, temperature, distance and battery voltage.  To run:
+```
+python3 create_db.py
+```
+
