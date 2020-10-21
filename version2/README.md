@@ -81,3 +81,20 @@ I created a separate table for each of the quantities being measured: humidity, 
 python3 create_db.py
 ```
 
+The python script `mqtt/recieve_to-db.py` listens for mqtt messages and adds them to the database.  To run:
+```
+python3 mqtt/recieve_to-db.py ../data/garden.db
+```
+
+#### Dash app
+
+There's also a [Dash](https://dash.plotly.com/) app that plots the data (`dash/app.py`)`.  To run, first install pandas and dash:
+```
+pip3 install pandas
+pip3 install dash
+```
+
+Then run:
+```
+python3 app.py
+```
